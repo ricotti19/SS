@@ -1,0 +1,94 @@
+import java.util.*;
+import java.awt.Desktop;
+import java.net.URI;
+
+    public class SongsPlayer
+    {
+        public static void main(String[] args) throws Exception
+        {   
+            
+            Desktop d = Desktop.getDesktop();
+            
+            try (Scanner console = new Scanner(System.in)) {
+				String playOrStop = "p";
+				String userSelectedSongLink = ("");
+				int indexOfSongChoice = 0; 
+				Random rng = new Random();
+				int randomNum = rng.nextInt(10);
+				String songs[] = {"I Knew You Were Trouble", "Hello", "All Too Well", "Roar", "Always Be My Baby", "No One", "Emotions", "Blank Space", "Shake It Off", "Someone Like You"};
+				String songLinks[] = {"https://www.youtube.com/watch?v=vNoKguSdy4Y", 
+						"https://www.youtube.com/watch?v=YQHsXMglC9A", 
+						"https://www.youtube.com/watch?v=9OQBDdNHmXo&pp=ygUZYWxsIHRvbyB3ZWxsIHRheWxvciBzd2lmdA%3D%3D",
+						"https://www.youtube.com/watch?v=CevxZvSJLk8", 
+						"https://www.youtube.com/watch?v=LfRNRymrv9k&pp=ygURYWx3YXlzIGJlIG15IGJhYnk%3D", 
+						"https://www.youtube.com/watch?v=rywUS-ohqeE&pp=ygUGbm8gb25l", 
+						"https://www.youtube.com/watch?v=NrJEFrth27Q&pp=ygUIZW1vdGlvbnM%3D", 
+						"https://www.youtube.com/watch?v=e-ORhEE9VVg&pp=ygUJYmxhbmsgc3Bh0gcJCbIJAYcqIYzv", 
+						"https://www.youtube.com/watch?v=nfWlot6h_JM&pp=ygUMc2hha2UgaXQgb2Zm", 
+						"https://www.youtube.com/watch?v=hLQl3WQQoQ0&pp=ygUQc29tZW9uZSBsaWtlIHlvdQ%3D%3D"};
+				System.out.println("Welcome to your window to Youtube!\n");
+				System.out.println("List of songs:\n1 - I Knew You Were Trouble\n2 - Hello\n3 - All Too Well\n4 - Roar\n5 - Always Be My Baby\n6 - No One\n7 - Emotions\n8 - Blank Space\n9 - Shake It Off\n10 - Someone Like You");
+				
+				while (playOrStop.equalsIgnoreCase("p"))
+				{
+					
+					System.out.print("Enter 0 to choose one of these songs\nor enter 1 to have the computer choose a song\nor enter 2 to type in a song not on the list >>> ");
+				    int userChoice = console.nextInt();
+				    console.nextLine();
+					
+				    if (userChoice == 0)
+				    {
+				        System.out.println("Enter a number from the list for the song you want to play >>> ");
+				        int songChoice = console.nextInt();
+				        console.nextLine();
+				        indexOfSongChoice = songChoice - 1;
+				        System.out.println(songs[indexOfSongChoice] + " Link: " + songLinks[indexOfSongChoice]);
+				        try
+				        {
+				        	d.browse(new URI(songLinks[indexOfSongChoice]));
+				        }
+				        catch(Exception e)
+				        {
+				            e.printStackTrace();
+				        }
+				    }
+				    else if (userChoice == 1)
+				    {
+				        System.out.println("The song chosen for you is " + songs[randomNum]);
+				        System.out.println(songs[randomNum] + " Link: " + songLinks[randomNum]);
+				        try
+				        {
+				            d.browse(new URI(songLinks[randomNum]));
+				        }
+				        catch(Exception e)
+				        {
+				            e.printStackTrace();
+				        }
+				    }
+				        
+				    else if (userChoice == 2)
+				    {
+				    	System.out.println("Enter the name of any song you'd like to hear: ");
+				    	String userSelectedSong = console.nextLine();
+				    	userSelectedSong = userSelectedSong.replaceAll(" ", "+");
+				    	userSelectedSongLink = ("https://www.youtube.com/results?search_query=" + userSelectedSong);
+				    	try
+				        {
+				            d.browse(new URI(userSelectedSongLink));
+				        }
+				        catch(Exception e)
+				        {
+				            e.printStackTrace();
+				        }
+				    }
+				    System.out.print("Enter \"p\" to keep playing or enter \"s\" to stop: ");
+				    playOrStop = console.nextLine();   		        
+				 }
+				 if (playOrStop.equalsIgnoreCase("s"))
+				 {
+					System.out.println("Bye! Thanks for playing!");
+					System.out.println("**********************************");
+				 }
+			}
+    }
+}
